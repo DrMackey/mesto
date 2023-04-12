@@ -1,0 +1,10 @@
+.profile__subtitle {
+  margin: 0;
+  padding-bottom: 36px;
+  color: white;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}

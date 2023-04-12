@@ -1,0 +1,13 @@
+.list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 20px;
+}
+
+@media (min-width: 426px) {
+  .list {
+    grid-template-columns: repeat(3, auto);
+  }
+}

@@ -8,6 +8,13 @@
 
 @media (min-width: 426px) {
   .list {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+
+@media (min-width: 700px) {
+  .list {
     grid-template-columns: repeat(3, auto);
+    gap: 20px 17px;
   }
 }

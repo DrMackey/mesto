@@ -3,3 +3,9 @@
   margin: 0 auto;
   padding-top: 28px;
 }
+
+@media (min-width: 426px) {
+  .page {
+    padding-top: 45px;
+  }
+}

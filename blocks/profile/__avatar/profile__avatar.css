@@ -1,10 +1,18 @@
 .profile__avatar {
   width: 120px;
-  padding-bottom: 120px;
+  height: 120px;
   margin-bottom: 26px;
   background-image: url(../../../images/avatar.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   border-radius: 100%;
+}
+
+@media (min-width: 426px) {
+  .profile__avatar {
+    min-width: 120px;
+    margin: 0;
+    /* flex-grow: 1; */
+  }
 }

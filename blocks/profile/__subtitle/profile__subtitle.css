@@ -7,4 +7,15 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+  text-align: center;
+}
+
+
+@media (min-width: 426px) {
+  .profile__subtitle {
+    padding-bottom: 0;
+    text-align: left;
+    font-size: 18px;
+    line-height: 22px;
+  }
 }

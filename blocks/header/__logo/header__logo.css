@@ -5,3 +5,16 @@
   background-repeat: no-repeat;
   background-size: auto 24.4px;
 }
+
+@media (min-width: 426px) {
+  .header__logo {
+    min-height: 74px;
+    background-size: auto 33px;
+  }
+}
+
+@media (min-width: 900px) {
+  .header__logo {
+    margin: 0;
+  }
+}

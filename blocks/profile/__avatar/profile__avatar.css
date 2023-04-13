@@ -9,10 +9,9 @@
   border-radius: 100%;
 }
 
-@media (min-width: 426px) {
+@media (min-width: 768px) {
   .profile__avatar {
     min-width: 120px;
     margin: 0;
-    /* flex-grow: 1; */
   }
 }

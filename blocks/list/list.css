@@ -12,7 +12,7 @@
   }
 }
 
-@media (min-width: 700px) {
+@media (min-width: 768px) {
   .list {
     grid-template-columns: repeat(3, auto);
     gap: 20px 17px;

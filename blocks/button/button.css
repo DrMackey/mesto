@@ -1,0 +1,7 @@
+.button {
+  transition: opacity .5s ease-in-out;
+}
+
+.button:hover {
+  opacity: .8;
+}

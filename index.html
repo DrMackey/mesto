@@ -7,19 +7,7 @@
   <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="body">
-  <section class="popup ">
-    <div class="popup__container">
-      <button class="popup__button-close button"></button>
-      <h2 class="popup__title">Редактировать профиль</h2>
-      <div class="popup__input-wrapper">
-        <input type="text" class="popup__input" id="name" placeholder="">
-        <input type="text" class="popup__input" id="subtitle" placeholder="">
-      </div>
-      <button class="popup__button button">Сохранить</button>
-    </div>
-  </section>
   <div class="page">
-
     <header class="header">
       <div class="header__logo"></div>
     </header>
@@ -38,42 +26,42 @@
       <section class="group">
         <ul class="list">
           <li class="list__item">
-            <img src="./images/kirill-pershin-1088404-unsplash.png" alt="" class="list__image">
+            <img src="./images/kirill-pershin-1088404-unsplash.png" alt="Пейзаж крепости." class="list__image">
             <div class="list__wrapper">
               <h2 class="list__title">Карачаевск</h2>
               <button class="list__like-button button"></button>
             </div>
           </li>
           <li class="list__item">
-            <img src="./images/kirill-pershin-1404681-unsplash.png" alt="" class="list__image">
+            <img src="./images/kirill-pershin-1404681-unsplash.png" alt="Пейзаж на равнину с горой Эльбру на горизонте." class="list__image">
             <div class="list__wrapper">
               <h2 class="list__title">Гора Эльбрус</h2>
               <button class="list__like-button button"></button>
             </div>
           </li>
           <li class="list__item">
-            <img src="./images/kirill-pershin-1556355-unsplash.png" alt="" class="list__image">
+            <img src="./images/kirill-pershin-1556355-unsplash.png" alt="Пейзаж заснеженных вершин Домбая." class="list__image">
             <div class="list__wrapper">
               <h2 class="list__title">Домбай</h2>
               <button class="list__like-button button"></button>
             </div>
           </li>
           <li class="list__item">
-            <img src="./images/kirill-pershin-1404681-unsplash.png" alt="" class="list__image">
+            <img src="./images/kirill-pershin-1404681-unsplash.png" alt="Пейзаж на равнину с горой Эльбру на горизонте." class="list__image">
             <div class="list__wrapper">
               <h2 class="list__title">Гора Эльбрус</h2>
               <button class="list__like-button button"></button>
             </div>
           </li>
           <li class="list__item">
-            <img src="./images/kirill-pershin-1556355-unsplash.png" alt="" class="list__image">
+            <img src="./images/kirill-pershin-1556355-unsplash.png" alt="Пейзаж заснеженных вершин Домбая." class="list__image">
             <div class="list__wrapper">
               <h2 class="list__title">Домбай</h2>
               <button class="list__like-button button"></button>
             </div>
           </li>
           <li class="list__item">
-            <img src="./images/kirill-pershin-1088404-unsplash.png" alt="" class="list__image">
+            <img src="./images/kirill-pershin-1088404-unsplash.png" alt="Пейзаж крепости." class="list__image">
             <div class="list__wrapper">
               <h2 class="list__title">Карачаевск</h2>
               <button class="list__like-button button"></button>
@@ -86,6 +74,17 @@
       <p class="footer__copy">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
+  <section class="popup ">
+    <div class="popup__container">
+      <button class="popup__button-close button"></button>
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form class="popup__input-wrapper" id="form">
+        <input type="text" class="popup__input" id="name" placeholder="Имя">
+        <input type="text" class="popup__input" id="subtitle" placeholder="О себе">
+      </form>
+      <button class="popup__button button" type="submit" form="form">Сохранить</button>
+    </div>
+  </section>
   <script src="./pages/index.js"></script>
 </body>
 </html>

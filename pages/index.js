@@ -7,11 +7,13 @@ let name = container.querySelector('.profile__name');
 let subtitle = container.querySelector('.profile__subtitle');
 let inputName = container.querySelector('#name');
 let inputSubtitle = container.querySelector('#subtitle');
+let likeButton = container.querySelectorAll('.list__like-button');
+let formElement = container.querySelector('.popup__input-wrapper');
 
 profileEditButton.addEventListener('click', function () {
   popup.classList.add('popup_opened');
-  inputName.setAttribute('placeholder', name.textContent);
-  inputSubtitle.setAttribute('placeholder', subtitle.textContent);
+  inputName.setAttribute('value', name.textContent);
+  inputSubtitle.setAttribute('value', subtitle.textContent);
 })
 
 popupButton.addEventListener('click', function () {
@@ -19,10 +21,30 @@ popupButton.addEventListener('click', function () {
   let valueInputSubtitle = inputSubtitle.value;
   name.textContent = valueInputName;
   subtitle.textContent = valueInputSubtitle;
-  console.log(valueInputName);
+  popup.classList.remove('popup_opened');
+});
+
+function handleFormSubmit (evt) {
+    evt.preventDefault();
+    let valueInputName = inputName.value;
+    let valueInputSubtitle = inputSubtitle.value;
+    name.textContent = valueInputName;
+    subtitle.textContent = valueInputSubtitle;
+    popup.classList.remove('popup_opened');
+}
+formElement.addEventListener('submit', handleFormSubmit);
+
+popupButtonClose.addEventListener('click', function () {
+  inputName.value = name.textContent;
+  inputSubtitle.value = subtitle.textContent;
   popup.classList.remove('popup_opened');
 })
 
-popupButtonClose.addEventListener('click', function () {
-  popup.classList.remove('popup_opened');
-})
+for (let i = 0; i < likeButton.length; i++) {
+  const element = likeButton[i];
+  element.addEventListener('click', function () {
+    element.classList.toggle('list__like-button_active');
+  })
+
+}
+

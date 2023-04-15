@@ -1,4 +1,7 @@
 .list__image {
   width: 100%;
-  padding-bottom: 25px;
+  height: 282px;
+  padding-bottom: 21px;
+  object-position: center;
+  object-fit: cover;
 }

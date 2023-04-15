@@ -1,5 +1,5 @@
-@import url(../vedor/normalize.css);
-@import url(../vedor/fonts/Inter/inter.css);
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts/Inter/inter.css);
 
 @import url(../blocks/body/body.css);
 @import url(../blocks/page/page.css);

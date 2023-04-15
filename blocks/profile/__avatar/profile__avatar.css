@@ -2,10 +2,6 @@
   width: 120px;
   height: 120px;
   margin-bottom: 26px;
-  background-image: url(../../../images/avatar.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
   border-radius: 100%;
 }
 

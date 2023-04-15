@@ -13,15 +13,15 @@
     </header>
     <main class="content">
       <section class="profile">
-        <div class="profile__avatar"></div>
+        <img src="./images/avatar.png" alt="Аватар пользователя." class="profile__avatar">
         <div class="profile__container">
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button button"></button>
+            <button class="profile__edit-button button" type="button"></button>
           </div>
           <p class="profile__subtitle">Исследователь океана</p>
         </div>
-        <button class="profile__add-button button"></button>
+        <button class="profile__add-button button" type="button"></button>
       </section>
       <section class="group">
         <ul class="list">
@@ -29,42 +29,42 @@
             <img src="./images/kirill-pershin-1088404-unsplash.png" alt="Пейзаж крепости." class="list__image">
             <div class="list__wrapper">
               <h2 class="list__title">Карачаевск</h2>
-              <button class="list__like-button button"></button>
+              <button class="list__like-button button" type="button"></button>
             </div>
           </li>
           <li class="list__item">
             <img src="./images/kirill-pershin-1404681-unsplash.png" alt="Пейзаж на равнину с горой Эльбру на горизонте." class="list__image">
             <div class="list__wrapper">
               <h2 class="list__title">Гора Эльбрус</h2>
-              <button class="list__like-button button"></button>
+              <button class="list__like-button button" type="button"></button>
             </div>
           </li>
           <li class="list__item">
             <img src="./images/kirill-pershin-1556355-unsplash.png" alt="Пейзаж заснеженных вершин Домбая." class="list__image">
             <div class="list__wrapper">
               <h2 class="list__title">Домбай</h2>
-              <button class="list__like-button button"></button>
+              <button class="list__like-button button" type="button"></button>
             </div>
           </li>
           <li class="list__item">
             <img src="./images/kirill-pershin-1404681-unsplash.png" alt="Пейзаж на равнину с горой Эльбру на горизонте." class="list__image">
             <div class="list__wrapper">
               <h2 class="list__title">Гора Эльбрус</h2>
-              <button class="list__like-button button"></button>
+              <button class="list__like-button button" type="button"></button>
             </div>
           </li>
           <li class="list__item">
             <img src="./images/kirill-pershin-1556355-unsplash.png" alt="Пейзаж заснеженных вершин Домбая." class="list__image">
             <div class="list__wrapper">
               <h2 class="list__title">Домбай</h2>
-              <button class="list__like-button button"></button>
+              <button class="list__like-button button" type="button"></button>
             </div>
           </li>
           <li class="list__item">
             <img src="./images/kirill-pershin-1088404-unsplash.png" alt="Пейзаж крепости." class="list__image">
             <div class="list__wrapper">
-              <h2 class="list__title">Карачаевск</h2>
-              <button class="list__like-button button"></button>
+              <h2 class="list__title">Карачаево-Черкессия</h2>
+              <button class="list__like-button button" type="button"></button>
             </div>
           </li>
         </ul>
@@ -76,15 +76,15 @@
   </div>
   <section class="popup ">
     <div class="popup__container">
-      <button class="popup__button-close button"></button>
+      <button class="popup__button-close button" type="button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__input-wrapper" id="form">
-        <input type="text" class="popup__input" id="name" placeholder="Имя">
-        <input type="text" class="popup__input" id="subtitle" placeholder="О себе">
+        <input type="text" class="popup__input" id="name" name="name" placeholder="Имя">
+        <input type="text" class="popup__input" id="subtitle" name="subtitle" placeholder="О себе">
+        <button class="popup__button button" type="submit" form="form">Сохранить</button>
       </form>
-      <button class="popup__button button" type="submit" form="form">Сохранить</button>
     </div>
   </section>
-  <script src="./pages/index.js"></script>
+  <script src="./scripts/index.js"></script>
 </body>
 </html>

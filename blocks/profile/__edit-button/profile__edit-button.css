@@ -9,3 +9,10 @@
   background-size: 50% auto;
   cursor: pointer;
 }
+
+@media (min-width: 426px) {
+  .profile__edit-button {
+    width: 24px;
+    height: 24px;
+  }
+}

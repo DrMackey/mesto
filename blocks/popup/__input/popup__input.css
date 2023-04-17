@@ -2,7 +2,7 @@
   margin: 0;
   margin-bottom: 30px;
   padding: 0;
-  padding-bottom: 10px;
+  padding-bottom: 9px;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
   outline:none;
@@ -11,4 +11,14 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+}
+
+.popup__input:last-child {
+  margin-bottom: 45px;
+}
+
+@media (min-width: 700px) {
+  .popup__input:last-child {
+    margin-bottom: 48px;
+  }
 }

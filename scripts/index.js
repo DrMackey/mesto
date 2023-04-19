@@ -7,7 +7,7 @@ let name = container.querySelector('.profile__name');
 let subtitle = container.querySelector('.profile__subtitle');
 let inputName = container.querySelector('#name');
 let inputSubtitle = container.querySelector('#subtitle');
-let formElement = container.querySelector('.popup__input-wrapper');
+let formElement = container.querySelector('.popup__input-form');
 
 profileEditButton.addEventListener('click', function () {
   popup.classList.add('popup_opened');

@@ -13,12 +13,12 @@
   line-height: 17px;
 }
 
-.popup__input:last-child {
+.popup__input:nth-child(2n) {
   margin-bottom: 45px;
 }
 
 @media (min-width: 700px) {
-  .popup__input:last-child {
+  .popup__input:nth-child(2n) {
     margin-bottom: 48px;
   }
 }

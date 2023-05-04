@@ -15,34 +15,7 @@ const popupNewCard = container.querySelector('.popup_type_new-card');
 const popupImage = container.querySelector('.popup_type_image');
 const popupImageSrc = popupImage.querySelector('.popup__image');
 const popupImageCaption = popupImage.querySelector('.popup__caption');
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
+const popupButtonClose = container.querySelectorAll('.popup__button-close');
 
 //клики по кнопкам
 profileEditButton.addEventListener('click', function () {
@@ -56,36 +29,38 @@ profileAddButton.addEventListener('click', function () {
 })
 
 const formElementEdit = popupEdit.querySelector('#form');
-formElementEdit.addEventListener('submit', handleFormSubmit);
+formElementEdit.addEventListener('submit', handleFormSubmitEdit);
 
 const formElementNewCard = popupNewCard.querySelector('#form-card');
-formElementNewCard.addEventListener('submit', handleFormSubmit);
+formElementNewCard.addEventListener('submit', handleFormSubmitNewCard);
 
-//отправка формы
-function handleFormSubmit (evt) {
-    evt.preventDefault();
-    if (evt.currentTarget.id === "form") {
-      name.textContent = inputName.value;
-      subtitle.textContent = inputSubtitle.value;
-      closePopup(popupEdit);
-    } else {
-      const inputNamnigValue = inputNaming.value;
-      const inputLinkValue = inputLink.value;
-      renderCards(inputNamnigValue, inputLinkValue);
-      closePopup(popupNewCard);
-      inputNaming.value = '';
-      inputLink.value = '';
-    }
+//клики по крестикам
+popupButtonClose.forEach((item) => { item.addEventListener('click', function() {
+    const popupOpened = container.querySelector('.popup_opened');
+    closePopup(popupOpened);
+  });
+});
 
+//отправка форм
+function handleFormSubmitEdit (evt) {
+  evt.preventDefault();
+  name.textContent = inputName.value;
+  subtitle.textContent = inputSubtitle.value;
+  closePopup(popupEdit);
+}
+
+function handleFormSubmitNewCard (evt) {
+  evt.preventDefault();
+  const inputNamnigValue = inputNaming.value;
+  const inputLinkValue = inputLink.value;
+  renderCard(inputNamnigValue, inputLinkValue);
+  closePopup(popupNewCard);
+  formElementNewCard.reset();
 }
 
 //открытие модального окна
 function openModal(popupCard) {
-  const popupButtonClose = popupCard.querySelector('.popup__button-close');
   popupCard.classList.add('popup_opened');
-  popupButtonClose.addEventListener('click', function () {
-    closePopup(popupCard);
-  });
 }
 
 //закрыте модального окна
@@ -93,7 +68,7 @@ function closePopup(popupCard) {
     popupCard.classList.remove('popup_opened');
 }
 
-//добавление карточки
+//формирование карточки
 function renderCards(nameValue, linkValue) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector('.list__item').cloneNode(true);
@@ -108,7 +83,13 @@ function renderCards(nameValue, linkValue) {
   removeCard(removeButton, cardElement);
   openImage(cardImage);
 
-  cardsContainer.prepend(cardElement);
+  return cardElement;
+}
+
+//добавление карточки
+function renderCard(elementName, elementLink) {
+  const cardTemplate = renderCards(elementName, elementLink);
+  cardsContainer.prepend(cardTemplate);
 }
 
 //вывод всех карточек
@@ -117,7 +98,7 @@ for (let i = 0; i < initialCards.length; i++) {
   const elementName = element.name;
   const elementLink = element.link;
 
-  renderCards(elementName, elementLink);
+  renderCard(elementName, elementLink);
 }
 
 //удаление карточки

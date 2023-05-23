@@ -58,9 +58,46 @@ function handleFormSubmitNewCard (evt) {
   formElementNewCard.reset();
 }
 
+//проверяем нажатие esc
+function isPressButtonEsc(popupModal, popupCard) {
+  if (popupModal.key === 'Escape') {
+    closePopup(popupCard);
+  };
+}
+
+//проверяем клик на оверлее
+function isPressClickOverlay(popupModal, popupCard) {
+  if (popupModal.target.classList.contains('popup')) {
+    closePopup(popupCard);
+  }
+}
+
 //открытие модального окна
 function openModal(popupCard) {
+  const inputList = Array.from(popupCard.querySelectorAll('.popup__input'));
+  const spanList = Array.from(popupCard.querySelectorAll('.popup__input-error'));
+
+  deleteInputErrors(inputList, spanList);
   popupCard.classList.add('popup_opened');
+  document.addEventListener('keydown', function (evt) {
+    isPressButtonEsc(evt, popupCard);
+  });
+  popupCard.addEventListener('click', function (evt) {
+    isPressClickOverlay(evt, popupCard);
+  });
+}
+
+function deleteInputErrors(inputList, spanList) {
+
+  inputList.forEach((element => {
+    element.classList.remove('popup__input_type_error');
+  }))
+
+  spanList.forEach((element => {
+    element.classList.remove('popup__input-error_active');
+    element.textContent = '';
+  }))
+
 }
 
 //закрыте модального окна

@@ -1,15 +1,16 @@
 .popup__button {
   margin: 0;
+  margin-top: 20px;
   padding: 14px 0 15px 0;
   background-color: #000;
+  color: #fff;
+  cursor: pointer;
   border: none;
   border-radius: 2px;
-  color: #fff;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  cursor: pointer;
 }
 
 @media (min-width: 700px) {

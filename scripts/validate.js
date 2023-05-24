@@ -7,10 +7,6 @@ const configFormSelectors = {
   errorClass: 'popup__input-error_active'
 }
 
-const formElement = document.querySelector(configFormSelectors.formSelector);
-const formInput = formElement.querySelector(configFormSelectors.inputSelector);
-const formError = formElement.querySelector(`.${formInput.id}-input-error`);
-
 // Функция, которая добавляет класс с ошибкой
 const showInputError = (formElement, inputElement, errorMessage, config) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-input-error`);
@@ -44,20 +40,22 @@ const hasInvalidInput = (inputList) => {
 
 //включение кнопки
 function enableButton(element, config) {
-  element.classList.add(config.inactiveButtonClass);
+  element.classList.remove(config.inactiveButtonClass);
+  element.disabled = false;
 }
 
 //выключение кнопки
 function disabledButton(element, config) {
-  element.classList.remove(config.inactiveButtonClass);
+  element.classList.add(config.inactiveButtonClass);
+  element.disabled = 'disabled';
 }
 
 //переключение состояния кнопки
 const toggleButtonState = (inputList, buttonElement, config) => {
   if (hasInvalidInput(inputList)) {
-    enableButton(buttonElement, config);
-  } else {
     disabledButton(buttonElement, config);
+  } else {
+    enableButton(buttonElement, config);
   }
 };
 

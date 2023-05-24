@@ -1,8 +1,8 @@
+const cardTemplate = document.querySelector('#card-template').content;
 const container = document.querySelector('.body');
-const popup = container.querySelector('.popup');
+// const popup = container.querySelector('.popup');
 const profileEditButton = container.querySelector('.profile__edit-button');
 const profileAddButton = container.querySelector('.profile__add-button');
-const popupButton = container.querySelector('.popup__button');
 const name = container.querySelector('.profile__name');
 const subtitle = container.querySelector('.profile__subtitle');
 const inputName = container.querySelector('#name');
@@ -15,28 +15,24 @@ const popupNewCard = container.querySelector('.popup_type_new-card');
 const popupImage = container.querySelector('.popup_type_image');
 const popupImageSrc = popupImage.querySelector('.popup__image');
 const popupImageCaption = popupImage.querySelector('.popup__caption');
-const popupButtonClose = container.querySelectorAll('.popup__button-close');
-
-//клики по кнопкам
-profileEditButton.addEventListener('click', function () {
-  inputName.value = name.textContent;
-  inputSubtitle.value = subtitle.textContent;
-  openModal(popupEdit);
-})
-
-profileAddButton.addEventListener('click', function () {
-  openModal(popupNewCard);
-})
-
+const popupButtonCloseList = container.querySelectorAll('.popup__button-close');
 const formElementEdit = popupEdit.querySelector('#form');
-formElementEdit.addEventListener('submit', handleFormSubmitEdit);
-
 const formElementNewCard = popupNewCard.querySelector('#form-card');
-formElementNewCard.addEventListener('submit', handleFormSubmitNewCard);
+const inputPopupEditList = [inputName, inputSubtitle];
+const spanPopupEditList = Array.from(popupEdit.querySelectorAll('.popup__input-error'));
+const inputPopupNewCardList = [inputNaming, inputLink];
+const spanPopupNewCardList = Array.from(popupNewCard.querySelectorAll('.popup__input-error'));
+const popupButtonEdit = formElementEdit.querySelector('.popup__button');
+const popupButtonNewCard = formElementNewCard.querySelector('.popup__button');
+const configFormSelectorsMini = {
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+}
 
 //клики по крестикам
-popupButtonClose.forEach((item) => { item.addEventListener('click', function() {
-    const popupOpened = container.querySelector('.popup_opened');
+popupButtonCloseList.forEach((button) => { button.addEventListener('click', function() {
+    const popupOpened = button.closest('.popup_opened');
     closePopup(popupOpened);
   });
 });
@@ -59,55 +55,35 @@ function handleFormSubmitNewCard (evt) {
 }
 
 //проверяем нажатие esc
-function isPressButtonEsc(popupModal, popupCard) {
-  if (popupModal.key === 'Escape') {
-    closePopup(popupCard);
+function handleCloseByEsc(evt) {
+  if (evt.key === 'Escape') {
+    closePopup(document.querySelector('.popup_opened'));
   };
 }
 
 //проверяем клик на оверлее
-function isPressClickOverlay(popupModal, popupCard) {
-  if (popupModal.target.classList.contains('popup')) {
-    closePopup(popupCard);
+function handleCloseByOverlay(evt) {
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target);
   }
 }
 
 //открытие модального окна
-function openModal(popupCard) {
-  const inputList = Array.from(popupCard.querySelectorAll('.popup__input'));
-  const spanList = Array.from(popupCard.querySelectorAll('.popup__input-error'));
-
-  deleteInputErrors(inputList, spanList);
-  popupCard.classList.add('popup_opened');
-  document.addEventListener('keydown', function (evt) {
-    isPressButtonEsc(evt, popupCard);
-  });
-  popupCard.addEventListener('click', function (evt) {
-    isPressClickOverlay(evt, popupCard);
-  });
-}
-
-function deleteInputErrors(inputList, spanList) {
-
-  inputList.forEach((element => {
-    element.classList.remove('popup__input_type_error');
-  }))
-
-  spanList.forEach((element => {
-    element.classList.remove('popup__input-error_active');
-    element.textContent = '';
-  }))
-
+function openModal(popup) {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', handleCloseByEsc);
+  popup.addEventListener('click', handleCloseByOverlay);
 }
 
 //закрыте модального окна
-function closePopup(popupCard) {
-    popupCard.classList.remove('popup_opened');
+function closePopup(popup) {
+    popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', handleCloseByEsc);
+    popup.removeEventListener('click', handleCloseByOverlay);
 }
 
 //формирование карточки
-function renderCards(nameValue, linkValue) {
-  const cardTemplate = document.querySelector('#card-template').content;
+function createCard(nameValue, linkValue) {
   const cardElement = cardTemplate.querySelector('.list__item').cloneNode(true);
   const likeButton = cardElement.querySelector('.list__like-button');
   const removeButton = cardElement.querySelector('.list__delete-button');
@@ -116,16 +92,16 @@ function renderCards(nameValue, linkValue) {
   cardImage.src = linkValue;
   cardImage.alt = nameValue;
   cardElement.querySelector('.list__title').textContent = nameValue;
-  like(likeButton);
-  removeCard(removeButton, cardElement);
-  openImage(cardImage);
+  setLikeButtonListener(likeButton);
+  setButtonRemoveListener(removeButton, cardElement);
+  setCardImageListener(cardImage);
 
   return cardElement;
 }
 
 //добавление карточки
 function renderCard(elementName, elementLink) {
-  const cardTemplate = renderCards(elementName, elementLink);
+  const cardTemplate = createCard(elementName, elementLink);
   cardsContainer.prepend(cardTemplate);
 }
 
@@ -136,24 +112,25 @@ for (let i = 0; i < initialCards.length; i++) {
   const elementLink = element.link;
 
   renderCard(elementName, elementLink);
+
 }
 
 //удаление карточки
-function removeCard(buttonRemove, cards) {
+function setButtonRemoveListener(buttonRemove, cards) {
   buttonRemove.addEventListener('click', function() {
     cards.remove();
   })
 }
 
 //переключение лайка
-function like(element) {
+function setLikeButtonListener(element) {
   element.addEventListener('click', evt => {
     evt.currentTarget.classList.toggle('list__like-button_active');
   })
 }
 
 //нажатие на картинку
-function openImage(element) {
+function setCardImageListener(element) {
   element.addEventListener('click', evt => {
     const imageSrc = evt.currentTarget.src;
     const imageAlt = evt.currentTarget.alt;
@@ -163,3 +140,24 @@ function openImage(element) {
     openModal(popupImage);
   })
 }
+
+
+//клики по кнопкам
+profileEditButton.addEventListener('click', function () {
+  inputName.value = name.textContent;
+  inputSubtitle.value = subtitle.textContent;
+  toggleButtonState(inputPopupEditList, popupButtonEdit, configFormSelectorsMini);
+  hideInputError(formElementEdit, inputName, configFormSelectorsMini);
+  hideInputError(formElementEdit, inputSubtitle, configFormSelectorsMini);
+  openModal(popupEdit);
+})
+
+profileAddButton.addEventListener('click', function () {
+  toggleButtonState(inputPopupNewCardList, popupButtonNewCard, configFormSelectorsMini);
+  hideInputError(formElementNewCard, inputNaming, configFormSelectorsMini);
+  hideInputError(formElementNewCard, inputLink, configFormSelectorsMini);
+  openModal(popupNewCard);
+})
+
+formElementEdit.addEventListener('submit', handleFormSubmitEdit);
+formElementNewCard.addEventListener('submit', handleFormSubmitNewCard);

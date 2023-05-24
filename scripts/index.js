@@ -1,6 +1,5 @@
 const cardTemplate = document.querySelector('#card-template').content;
 const container = document.querySelector('.body');
-// const popup = container.querySelector('.popup');
 const profileEditButton = container.querySelector('.profile__edit-button');
 const profileAddButton = container.querySelector('.profile__add-button');
 const name = container.querySelector('.profile__name');
@@ -24,6 +23,7 @@ const inputPopupNewCardList = [inputNaming, inputLink];
 const spanPopupNewCardList = Array.from(popupNewCard.querySelectorAll('.popup__input-error'));
 const popupButtonEdit = formElementEdit.querySelector('.popup__button');
 const popupButtonNewCard = formElementNewCard.querySelector('.popup__button');
+const popups = Array.from(container.querySelectorAll('.popup'));
 const configFormSelectorsMini = {
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
@@ -72,14 +72,12 @@ function handleCloseByOverlay(evt) {
 function openModal(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', handleCloseByEsc);
-  popup.addEventListener('click', handleCloseByOverlay);
 }
 
 //закрыте модального окна
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', handleCloseByEsc);
-    popup.removeEventListener('click', handleCloseByOverlay);
 }
 
 //формирование карточки
@@ -141,6 +139,10 @@ function setCardImageListener(element) {
   })
 }
 
+//устанавливаем слушатель клика на все модальные окна
+popups.forEach((popup) => {
+  popup.addEventListener('click', handleCloseByOverlay)
+})
 
 //клики по кнопкам
 profileEditButton.addEventListener('click', function () {

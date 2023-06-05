@@ -80,6 +80,50 @@ function closePopup(popup) {
     document.removeEventListener('keydown', handleCloseByEsc);
 }
 
+
+//принимает (ссылку, текст, селектор темплейта)
+class Card {
+  constructor(link, text, template) {
+    this._photoLinkCard = link;
+    this._textCard = text;
+    this._templateSelector = template;
+  }
+
+  _getTemplate() {
+    const cardElement = this._templateSelector.querySelector('.list__item').cloneNode(true);
+
+    return cardElement;
+  }
+
+  _setEventListeners() {
+    this._element.addEventListener('click', evt => {
+      if (evt.target.classList.contains('list__like-button')) {
+        evt.target.classList.toggle('list__like-button_active');
+      } else if (evt.target.classList.contains('list__delete-button')) {
+        this._element.remove();
+      } else if (evt.target.classList.contains('list__image')) {
+          const imageSrc = evt.currentTarget.src;
+          const imageAlt = evt.currentTarget.alt;
+          popupImageSrc.src = imageSrc;
+          popupImageSrc.alt = imageAlt;
+          popupImageCaption.textContent = imageAlt;
+          openModal(popupImage);
+      }
+    })
+  }
+
+  generateCard() {
+    this._element = this._getTemplate();
+    this._setEventListeners();
+
+    this._element.querySelector('.list__image').src = this._photoLinkCard;
+    this._element.querySelector('.list__image').alt = this._textCard;
+    this._element.querySelector('.list__title').textContent = this._textCard;
+
+    return this._element;
+  }
+}
+
 //формирование карточки
 function createCard(nameValue, linkValue) {
   const cardElement = cardTemplate.querySelector('.list__item').cloneNode(true);
@@ -109,9 +153,14 @@ for (let i = 0; i < initialCards.length; i++) {
   const elementName = element.name;
   const elementLink = element.link;
 
-  renderCard(elementName, elementLink);
-
+  // renderCard(elementName, elementLink);
+  const card = new Card(elementLink, elementName, cardTemplate)
+  const cardElement = card.generateCard();
+  cardsContainer.prepend(cardElement);
 }
+
+
+
 
 //удаление карточки
 function setButtonRemoveListener(buttonRemove, cards) {

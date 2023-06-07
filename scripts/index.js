@@ -1,7 +1,7 @@
-import {Card} from './card.js';
-import {FormValidator} from './formValidator.js';
+import {Card} from './Card.js';
+import {FormValidator} from './FormValidator.js';
 
-const cardTemplate = document.querySelector('#card-template').content;
+const cardTemplateSelector = '#card-template';
 const container = document.querySelector('.body');
 const profileEditButton = container.querySelector('.profile__edit-button');
 const profileAddButton = container.querySelector('.profile__add-button');
@@ -40,14 +40,15 @@ function handleFormSubmitEdit (evt) {
 }
 
 function handleFormSubmitNewCard (evt) {
+  const subButton = evt.target.querySelector('.popup__button');
   evt.preventDefault();
   const inputNamnigValue = inputNaming.value;
   const inputLinkValue = inputLink.value;
-  const card = new Card(inputLinkValue, inputNamnigValue, cardTemplate, setCardImageListener)
-  const cardElement = card.generateCard();
-  cardsContainer.prepend(cardElement);
+  const callBackCard = createCard(inputLinkValue, inputNamnigValue);
+  cardsContainer.prepend(callBackCard);
   closePopup(popupNewCard);
   formElementNewCard.reset();
+  formValidatorItemList['popup_type_new-card'].toggleButtonState(subButton);
 }
 
 //проверяем нажатие esc
@@ -80,10 +81,8 @@ for (let i = 0; i < initialCards.length; i++) {
   const element = initialCards[i];
   const elementName = element.name;
   const elementLink = element.link;
-  const card = new Card(elementLink, elementName, cardTemplate, setCardImageListener)
-  const cardElement = card.generateCard();
-
-  cardsContainer.prepend(cardElement);
+  const callBackCard = createCard(elementLink, elementName);
+  cardsContainer.prepend(callBackCard);
 }
 
 // вешаем экзепляр класса на каждую форму
@@ -101,6 +100,12 @@ function setCardImageListener(cardPhoto) {
   popupImageSrc.alt = imageAlt;
   popupImageCaption.textContent = imageAlt;
   openModal(popupImage);
+}
+
+function createCard(elementLink, elementName) {
+  const card = new Card(elementLink, elementName, cardTemplateSelector, setCardImageListener)
+  const cardElement = card.generateCard();
+  return cardElement;
 }
 
 //устанавливаем слушатель клика на все модальные окна

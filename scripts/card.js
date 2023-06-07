@@ -1,8 +1,8 @@
 export class Card {
-    constructor(link, text, template, setCardImageListener) {
+    constructor(link, text, templateSelector, setCardImageListener) {
       this._photoLinkCard = link;
       this._textCard = text;
-      this._templateSelector = template;
+      this._templateSelector = document.querySelector(`${templateSelector}`).content;
       this._setCardImageListener = setCardImageListener;
     }
   
@@ -15,7 +15,7 @@ export class Card {
     _setEventListeners() {
       this._element.querySelector('.list__delete-button').addEventListener('click', () => this._element.remove());
       this._element.querySelector('.list__like-button').addEventListener('click', evt => this._handleButtonLike(evt));
-      this._element.querySelector('.list__image').addEventListener('click', evt => {this._setCardImageListener(evt.target)});
+      this._image.addEventListener('click', evt => {this._setCardImageListener(evt.target)});
     }
   
     _handleButtonLike(likeButton) {
@@ -24,10 +24,11 @@ export class Card {
   
     generateCard() {
       this._element = this._getTemplate();
+      this._image = this._element.querySelector('.list__image');
       this._setEventListeners();
   
-      this._element.querySelector('.list__image').src = this._photoLinkCard;
-      this._element.querySelector('.list__image').alt = this._textCard;
+      this._image.src = this._photoLinkCard;
+      this._image.alt = this._textCard;
       this._element.querySelector('.list__title').textContent = this._textCard;
   
       return this._element;

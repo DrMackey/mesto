@@ -40,7 +40,6 @@ function handleFormSubmitEdit (evt) {
 }
 
 function handleFormSubmitNewCard (evt) {
-  const subButton = evt.target.querySelector('.popup__button');
   evt.preventDefault();
   const inputNamnigValue = inputNaming.value;
   const inputLinkValue = inputLink.value;
@@ -48,7 +47,7 @@ function handleFormSubmitNewCard (evt) {
   cardsContainer.prepend(callBackCard);
   closePopup(popupNewCard);
   formElementNewCard.reset();
-  formValidatorItemList['popup_type_new-card'].toggleButtonState(subButton);
+  formValidatorItemList['popup_type_new-card'].toggleButtonState();
 }
 
 //проверяем нажатие esc

@@ -1,3 +1,6 @@
+import {Card} from './card.js';
+import {FormValidator} from './formValidator.js';
+
 const cardTemplate = document.querySelector('#card-template').content;
 const container = document.querySelector('.body');
 const profileEditButton = container.querySelector('.profile__edit-button');
@@ -9,6 +12,7 @@ const inputSubtitle = container.querySelector('#subtitle');
 const inputNaming = container.querySelector('#naming');
 const inputLink = container.querySelector('#link');
 const cardsContainer = container.querySelector('.list');
+const popupsList = Array.from(container.querySelectorAll('.popup__input-form'));
 const popupEdit = container.querySelector('.popup_type_edit');
 const popupNewCard = container.querySelector('.popup_type_new-card');
 const popupImage = container.querySelector('.popup_type_image');
@@ -17,18 +21,8 @@ const popupImageCaption = popupImage.querySelector('.popup__caption');
 const popupButtonCloseList = container.querySelectorAll('.popup__button-close');
 const formElementEdit = popupEdit.querySelector('#form');
 const formElementNewCard = popupNewCard.querySelector('#form-card');
-const inputPopupEditList = [inputName, inputSubtitle];
-const spanPopupEditList = Array.from(popupEdit.querySelectorAll('.popup__input-error'));
-const inputPopupNewCardList = [inputNaming, inputLink];
-const spanPopupNewCardList = Array.from(popupNewCard.querySelectorAll('.popup__input-error'));
-const popupButtonEdit = formElementEdit.querySelector('.popup__button');
-const popupButtonNewCard = formElementNewCard.querySelector('.popup__button');
 const popups = Array.from(container.querySelectorAll('.popup'));
-const configFormSelectorsMini = {
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-}
+const formValidatorItemList = {};
 
 //клики по крестикам
 popupButtonCloseList.forEach((button) => { button.addEventListener('click', function() {
@@ -49,7 +43,9 @@ function handleFormSubmitNewCard (evt) {
   evt.preventDefault();
   const inputNamnigValue = inputNaming.value;
   const inputLinkValue = inputLink.value;
-  renderCard(inputNamnigValue, inputLinkValue);
+  const card = new Card(inputLinkValue, inputNamnigValue, cardTemplate, setCardImageListener)
+  const cardElement = card.generateCard();
+  cardsContainer.prepend(cardElement);
   closePopup(popupNewCard);
   formElementNewCard.reset();
 }
@@ -68,83 +64,15 @@ function handleCloseByOverlay(evt) {
   }
 }
 
-//открытие модального окна
+//открытие/закрытие модального окна
 function openModal(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', handleCloseByEsc);
 }
 
-//закрыте модального окна
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', handleCloseByEsc);
-}
-
-
-//принимает (ссылку, текст, селектор темплейта)
-class Card {
-  constructor(link, text, template) {
-    this._photoLinkCard = link;
-    this._textCard = text;
-    this._templateSelector = template;
-  }
-
-  _getTemplate() {
-    const cardElement = this._templateSelector.querySelector('.list__item').cloneNode(true);
-
-    return cardElement;
-  }
-
-  _setEventListeners() {
-    this._element.addEventListener('click', evt => {
-      if (evt.target.classList.contains('list__like-button')) {
-        evt.target.classList.toggle('list__like-button_active');
-      } else if (evt.target.classList.contains('list__delete-button')) {
-        this._element.remove();
-      } else if (evt.target.classList.contains('list__image')) {
-          const imageSrc = evt.currentTarget.src;
-          const imageAlt = evt.currentTarget.alt;
-          popupImageSrc.src = imageSrc;
-          popupImageSrc.alt = imageAlt;
-          popupImageCaption.textContent = imageAlt;
-          openModal(popupImage);
-      }
-    })
-  }
-
-  generateCard() {
-    this._element = this._getTemplate();
-    this._setEventListeners();
-
-    this._element.querySelector('.list__image').src = this._photoLinkCard;
-    this._element.querySelector('.list__image').alt = this._textCard;
-    this._element.querySelector('.list__title').textContent = this._textCard;
-
-    return this._element;
-  }
-}
-
-//формирование карточки
-function createCard(nameValue, linkValue) {
-  const cardElement = cardTemplate.querySelector('.list__item').cloneNode(true);
-  const likeButton = cardElement.querySelector('.list__like-button');
-  const removeButton = cardElement.querySelector('.list__delete-button');
-  const cardImage = cardElement.querySelector('.list__image');
-
-  cardImage.src = linkValue;
-  cardImage.alt = nameValue;
-  cardElement.querySelector('.list__title').textContent = nameValue;
-  setLikeButtonListener(likeButton);
-  setButtonRemoveListener(removeButton, cardElement);
-  setCardImageListener(cardImage);
-
-  return cardElement;
-}
-
-//добавление карточки
-function renderCard(elementName, elementLink) {
-  const cardTemplate = createCard(elementName, elementLink);
-  cardsContainer.prepend(cardTemplate);
 }
 
 //вывод всех карточек
@@ -152,40 +80,27 @@ for (let i = 0; i < initialCards.length; i++) {
   const element = initialCards[i];
   const elementName = element.name;
   const elementLink = element.link;
-
-  // renderCard(elementName, elementLink);
-  const card = new Card(elementLink, elementName, cardTemplate)
+  const card = new Card(elementLink, elementName, cardTemplate, setCardImageListener)
   const cardElement = card.generateCard();
+
   cardsContainer.prepend(cardElement);
 }
 
+// вешаем экзепляр класса на каждую форму
+popupsList.forEach(formElement => {
+  const formValidator = new FormValidator(configFormSelectors, formElement);
+  formValidator.enableValidation();
+  formValidatorItemList[formElement.parentElement.parentElement.id] = formValidator;
+});
 
-
-
-//удаление карточки
-function setButtonRemoveListener(buttonRemove, cards) {
-  buttonRemove.addEventListener('click', function() {
-    cards.remove();
-  })
-}
-
-//переключение лайка
-function setLikeButtonListener(element) {
-  element.addEventListener('click', evt => {
-    evt.currentTarget.classList.toggle('list__like-button_active');
-  })
-}
-
-//нажатие на картинку
-function setCardImageListener(element) {
-  element.addEventListener('click', evt => {
-    const imageSrc = evt.currentTarget.src;
-    const imageAlt = evt.currentTarget.alt;
-    popupImageSrc.src = imageSrc;
-    popupImageSrc.alt = imageAlt;
-    popupImageCaption.textContent = imageAlt;
-    openModal(popupImage);
-  })
+// нажатие на картинку
+function setCardImageListener(cardPhoto) {
+  const imageSrc = cardPhoto.src;
+  const imageAlt = cardPhoto.alt;
+  popupImageSrc.src = imageSrc;
+  popupImageSrc.alt = imageAlt;
+  popupImageCaption.textContent = imageAlt;
+  openModal(popupImage);
 }
 
 //устанавливаем слушатель клика на все модальные окна
@@ -195,18 +110,17 @@ popups.forEach((popup) => {
 
 //клики по кнопкам
 profileEditButton.addEventListener('click', function () {
+  const inputList = Array.from(popupEdit.querySelectorAll(configFormSelectors.inputSelector));
+
   inputName.value = name.textContent;
   inputSubtitle.value = subtitle.textContent;
-  toggleButtonState(inputPopupEditList, popupButtonEdit, configFormSelectorsMini);
-  hideInputError(formElementEdit, inputName, configFormSelectorsMini);
-  hideInputError(formElementEdit, inputSubtitle, configFormSelectorsMini);
+  inputList.forEach((inputElement) => {
+    formValidatorItemList['popup_type_edit'].isValid(inputElement);
+  });
   openModal(popupEdit);
 })
 
 profileAddButton.addEventListener('click', function () {
-  toggleButtonState(inputPopupNewCardList, popupButtonNewCard, configFormSelectorsMini);
-  hideInputError(formElementNewCard, inputNaming, configFormSelectorsMini);
-  hideInputError(formElementNewCard, inputLink, configFormSelectorsMini);
   openModal(popupNewCard);
 })
 

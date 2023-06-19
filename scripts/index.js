@@ -1,5 +1,6 @@
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
+import {Section} from './Section.js';
 
 const cardTemplateSelector = '#card-template';
 const container = document.querySelector('.body');
@@ -12,6 +13,7 @@ const inputSubtitle = container.querySelector('#subtitle');
 const inputNaming = container.querySelector('#naming');
 const inputLink = container.querySelector('#link');
 const cardsContainer = container.querySelector('.list');
+const containerSelector = '.list';
 const popupsList = Array.from(container.querySelectorAll('.popup__input-form'));
 const popupEdit = container.querySelector('.popup_type_edit');
 const popupNewCard = container.querySelector('.popup_type_new-card');
@@ -101,10 +103,26 @@ function setCardImageListener(cardPhoto) {
   openModal(popupImage);
 }
 
+const standartCardList = new Section({
+  items: initialCards,
+  renderer: (items) => {//elementLink, elementName,
+    for (let i = 0; i < items.length; i++) {
+      const card = new Card(items[i], cardTemplateSelector, setCardImageListener)
+      const cardElement = card.generateCard();
+      // console.log(cardElement);
+      // standartCardList.addItem(cardElement);
+      return cardElement;
+    }
+    // standartCardList.addItem();
+    // console.log(item);
+  }
+}, containerSelector);
+// standartCardList.render();
+standartCardList.addItem();
+
+// console.log(standartCardList);
 function createCard(elementLink, elementName) {
-  const card = new Card(elementLink, elementName, cardTemplateSelector, setCardImageListener)
-  const cardElement = card.generateCard();
-  return cardElement;
+
 }
 
 //устанавливаем слушатель клика на все модальные окна
@@ -130,3 +148,4 @@ profileAddButton.addEventListener('click', function () {
 
 formElementEdit.addEventListener('submit', handleFormSubmitEdit);
 formElementNewCard.addEventListener('submit', handleFormSubmitNewCard);
+

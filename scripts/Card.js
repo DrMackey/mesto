@@ -1,7 +1,7 @@
 export class Card {
-    constructor(link, text, templateSelector, setCardImageListener) {
+    constructor({name, link}, templateSelector, setCardImageListener) {
       this._photoLinkCard = link;
-      this._textCard = text;
+      this._textCard = name;
       this._templateSelector = document.querySelector(`${templateSelector}`).content;
       this._setCardImageListener = setCardImageListener;
     }

@@ -33,20 +33,3 @@ export class Popup {
     document.removeEventListener('keydown', this._lisenerHandleEscClose);
   }
 }
-
-export class PopupWithImage extends Popup {
-  constructor(cardPhoto, popupSelector) {
-    super(popupSelector);
-    this._popupImageSrc = document.querySelector('.popup__image');
-    this._popupImage = document.querySelector('.popup_type_image');
-    this._imageSrc = cardPhoto.src;
-    this._imageAlt = cardPhoto.alt;
-  }
-
-  open() {
-    this._popupImageSrc.src = this._imageSrc;
-    this._popupImageSrc.alt = this._imageAlt;
-    super.setEventListeners();
-    this._popupImage.classList.add('popup_opened');
-  }
-}

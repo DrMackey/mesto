@@ -1,3 +1,5 @@
+import '../pages/index.css';
+
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
 import {Section} from './Section.js';
@@ -5,6 +7,8 @@ import {Popup} from './Popup.js';
 import {PopupWithImage} from './PopupWithImage.js';
 import {PopupWithForm} from './PopupWithForm.js';
 import {UserInfo} from './UserInfo.js';
+import {initialCards} from './cards.js';
+import {configFormSelectors} from './validate.js'
 
 const cardTemplateSelector = '#card-template';
 const container = document.querySelector('.body');

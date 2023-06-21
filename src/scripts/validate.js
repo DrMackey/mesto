@@ -1,4 +1,4 @@
-const configFormSelectors = {
+export const configFormSelectors = {
   formSelector: '.popup__input-form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',

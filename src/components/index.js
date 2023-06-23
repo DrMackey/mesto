@@ -15,7 +15,7 @@ const container = document.querySelector(".body");
 const profileEditButton = container.querySelector(".profile__edit-button");
 const profileAddButton = container.querySelector(".profile__add-button");
 const name = container.querySelector(".profile__name");
-const subtitle = container.querySelector(".profile__subtitle");
+const subtitle = ".profile__subtitle";
 const inputName = container.querySelector("#name");
 const inputSubtitle = container.querySelector("#subtitle");
 const containerSelector = ".list";
@@ -23,20 +23,26 @@ const popupsList = Array.from(container.querySelectorAll(".popup__input-form"));
 // const popupEdit = container.querySelector(".popup_type_edit");
 const popupEdit = ".popup_type_edit";
 const popupNewCard = ".popup_type_new-card";
-const popupImage = container.querySelector(".popup_type_image");
+const popupImage = ".popup_type_image";
 const formValidatorItemList = {};
 
-const popupClass = new Popup(popupEdit);
+const popupClass = new Popup(popupEdit); // УБРАТЬ ПОПАП!!!!!!!!!!
 const userInfo = new UserInfo(name, subtitle);
 
 const standartCardList = new Section(
   {
     items: initialCards,
-    renderer: (item) => {
-      const card = new Card(item, cardTemplateSelector, handleCardClick);
-      const cardElement = card.generateCard();
+    // renderer: (item) => {
+    // const card = new Card(item, cardTemplateSelector, handleCardClick);
+    //   const cardElement = card.generateCard();
 
-      return cardElement;
+    //   return cardElement;
+
+    // }
+    renderer: (cardData) => {
+      const card = new Card(cardData, cardTemplateSelector, handleCardClick);
+      const cardElement = card.generateCard();
+      standartCardList.addItem(cardElement);
     },
   },
   containerSelector
@@ -45,6 +51,7 @@ const standartCardList = new Section(
 const popupWithProfile = new PopupWithForm(
   {
     handleFormSubmit: (items) => {
+      console.log(items);
       userInfo.setUserInfo(items);
     },
   },
@@ -99,4 +106,4 @@ profileAddButton.addEventListener("click", function () {
   popupClass.open();
 });
 
-standartCardList.render();
+standartCardList.renderItems();

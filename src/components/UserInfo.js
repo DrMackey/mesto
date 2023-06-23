@@ -1,7 +1,7 @@
 export class UserInfo {
   constructor(name, caption) {
     this._nameElement = name;
-    this._captionElement = caption;
+    this._captionElement = document.querySelector(caption);
   }
 
   getUserInfo() {
@@ -11,8 +11,8 @@ export class UserInfo {
     };
   }
 
-  setUserInfo({ link, name }) {
+  setUserInfo({ name, subtitle }) {
     this._nameElement.textContent = name;
-    this._captionElement.textContent = link;
+    this._captionElement.textContent = subtitle;
   }
 }

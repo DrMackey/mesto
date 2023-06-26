@@ -1,12 +1,12 @@
-import "../pages/index.css";
+import "./index.css";
 
 import * as constants from "../utils/constants.js";
-import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
-import { Section } from "./Section.js";
-import { PopupWithImage } from "./PopupWithImage.js";
-import { PopupWithForm } from "./PopupWithForm.js";
-import { UserInfo } from "./UserInfo.js";
+import { Card } from "../components/Card.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { Section } from "../components/Section.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { UserInfo } from "../components/UserInfo.js";
 import { initialCards } from "../utils/cards.js";
 import { configFormSelectors } from "../utils/validate.js";
 
@@ -67,7 +67,6 @@ function handleCardClick(cardPhoto) {
 
 constants.profileEditButton.addEventListener("click", function () {
   const userInfoInputs = userInfo.getUserInfo();
-  popupWithProfile.setEventListeners();
 
   constants.inputName.value = userInfoInputs.name;
   constants.inputSubtitle.value = userInfoInputs.caption;
@@ -77,9 +76,11 @@ constants.profileEditButton.addEventListener("click", function () {
 });
 
 constants.profileAddButton.addEventListener("click", function () {
-  popupWithCard.setEventListeners();
   constants.formValidatorItemList["popup_type_new-card"].resetValidation();
   popupWithCard.open();
 });
 
+popupWithCard.setEventListeners();
+popupWithProfile.setEventListeners();
+popupImageClass.setEventListeners();
 standartCardList.renderItems(initialCards);

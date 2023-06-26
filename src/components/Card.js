@@ -2,9 +2,7 @@ export class Card {
   constructor({ name, link }, templateSelector, handleClickImage) {
     this._photoLinkCard = link;
     this._textCard = name;
-    this._templateSelector = document.querySelector(
-      `${templateSelector}`
-    ).content;
+    this._templateSelector = document.querySelector(templateSelector).content;
     this._handleClickImage = handleClickImage;
   }
 
@@ -18,6 +16,7 @@ export class Card {
 
   _removeCard() {
     this._element.remove();
+    this._element = null;
   }
 
   _setEventListeners() {

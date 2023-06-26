@@ -4,7 +4,7 @@ export const profileEditButton = container.querySelector(
   ".profile__edit-button"
 );
 export const profileAddButton = container.querySelector(".profile__add-button");
-export const name = container.querySelector(".profile__name");
+export const name = ".profile__name";
 export const subtitle = ".profile__subtitle";
 export const inputName = container.querySelector("#name");
 export const inputSubtitle = container.querySelector("#subtitle");

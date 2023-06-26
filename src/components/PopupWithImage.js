@@ -8,6 +8,10 @@ export class PopupWithImage extends Popup {
     this._popupImage = document.querySelector(popupSelector);
   }
 
+  setEventListeners() {
+    super.setEventListeners();
+  }
+
   open(cardPhoto) {
     this._imageSrc = cardPhoto.src;
     this._imageAlt = cardPhoto.alt;
@@ -15,7 +19,6 @@ export class PopupWithImage extends Popup {
     this._popupImageSrc.alt = this._imageAlt;
     this._popupImageCaption.textContent = this._imageAlt;
 
-    super.setEventListeners();
     super.open();
   }
 }

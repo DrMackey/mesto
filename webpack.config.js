@@ -10,7 +10,7 @@ module.exports = (env) => {
 
   return {
     entry: {
-      main: "./src/components/index.js",
+      main: "./src/pages/index.js",
     },
     output: {
       filename: production

@@ -1,6 +1,6 @@
 export class UserInfo {
   constructor(name, caption) {
-    this._nameElement = name;
+    this._nameElement = document.querySelector(name);
     this._captionElement = document.querySelector(caption);
   }
 

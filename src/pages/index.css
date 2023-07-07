@@ -39,6 +39,7 @@
 @import url(../blocks/list/__title/list__title.css);
 @import url(../blocks/list/__like-button/list__like-button.css);
 @import url(../blocks/list/__like-button/_active/list__like-button_active.css);
+@import url(../blocks/list/__likes/list__likes.css);
 @import url(../blocks/list/__delete-button/list__delete-button.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copy/footer__copy.css);

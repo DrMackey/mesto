@@ -6,6 +6,7 @@
   "scripts": {
     "build": "rm -rf dist && webpack --env production --mode production ",
     "start": "webpack serve",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
   "keywords": [],

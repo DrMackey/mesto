@@ -126,7 +126,7 @@ const popupWithUpdateAvatar = new PopupWithForm(
         .then((res) => {
           document.querySelector(".profile__avatar").src = res.avatar;
           popupWithUpdateAvatar.close();
-          popupWithUpdateAvatar.handleStateButtonLoading();
+          popupWithUpdateAvatar.handleStateButtonDone();
         })
         .catch((err) => {
           console.log(err);
@@ -146,7 +146,7 @@ const popupWithCard = new PopupWithForm(
         .then((data) => {
           standartCardList.addItem(createCard(data));
           popupWithCard.close();
-          popupWithCard.handleStateButtonLoading();
+          popupWithCard.handleStateButtonDone();
         })
         .catch((err) => {
           console.log(err);

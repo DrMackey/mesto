@@ -16,6 +16,18 @@ export class Api {
     });
   }
 
+  getProfileId() {
+    return fetch(`${this._url}/users/me`, {
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
+
   getProfileData() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
@@ -29,7 +41,7 @@ export class Api {
   }
 
   patchUserInfo({ name, subtitle }) {
-    fetch(`${this._url}/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
@@ -46,29 +58,74 @@ export class Api {
   }
 
   postCreateCard({ name, link }) {
-    console.log(name);
-    console.log(link);
-    fetch(`${this._url}/cards`, {
+    return fetch(`${this._url}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
         name: name,
         link: link,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
 
-        Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .then((data) => {
-        console.log(data);
-      });
+      Promise.reject(`Ошибка: ${res.status}`);
+    });
   }
 
   deleteCard(idCard) {
-    console.log("api card " + idCard);
+    return fetch(`${this._url}/cards/${idCard}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
+
+  putLike(cardId) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
+
+  deleteLike(cardId) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
+
+  updateAvatar(link) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: link,
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      Promise.reject(`Ошибка: ${res.status}`);
+    });
   }
 }

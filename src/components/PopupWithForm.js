@@ -28,7 +28,7 @@ export class PopupWithForm extends Popup {
       return formValues;
     }
 
-    return { cardId: this._cardId, element: this._element };
+    return this._cardId;
   }
 
   setEventListeners() {

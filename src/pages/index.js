@@ -19,10 +19,18 @@ const api = new Api({
   },
 });
 
-api
-  .getInitialCards()
-  .then((data) => {
-    standartCardList.renderItems(data);
+const userInfo = new UserInfo(constants.name, constants.subtitle);
+const popupImageClass = new PopupWithImage(constants.popupImage);
+
+Promise.all([api.getProfileData(), api.getInitialCards()])
+  .then((values) => {
+    const valuesUserData = values[0];
+    const valuesCardList = values[1];
+
+    userInfo.setUserInfo(valuesUserData);
+    ownerId = valuesUserData._id;
+
+    standartCardList.renderItems(valuesCardList);
   })
   .catch((err) => {
     console.log(err);
@@ -30,25 +38,20 @@ api
 
 const popupWithConfirmation = new PopupWithForm(
   {
-    handleFormSubmit: ({ cardId, element }) => {
+    handleFormSubmit: (cardId) => {
       api
         .deleteCard(cardId)
         .then(() => {
-          element.remove();
-          element = null;
+          constants.cardItemList[cardId].cardRemove();
           popupWithConfirmation.close();
         })
         .catch((err) => {
           console.log(err);
-          popupWithConfirmation.close();
         });
     },
   },
   constants.popupConfirm
 );
-
-const userInfo = new UserInfo(constants.name, constants.subtitle);
-const popupImageClass = new PopupWithImage(constants.popupImage);
 
 const standartCardList = new Section(
   {
@@ -92,6 +95,7 @@ function createCard(cardData) {
     },
     ownerId
   );
+  constants.cardItemList[card.getId()] = card;
   const cardElement = card.generateCard();
 
   return cardElement;
@@ -110,7 +114,6 @@ const popupWithProfile = new PopupWithForm(
         })
         .catch((err) => {
           console.log(err);
-          popupWithProfile.close();
         });
     },
   },
@@ -124,13 +127,12 @@ const popupWithUpdateAvatar = new PopupWithForm(
       api
         .updateAvatar(data.link)
         .then((res) => {
-          document.querySelector(".profile__avatar").src = res.avatar;
+          userInfo.setUserInfo(res);
           popupWithUpdateAvatar.close();
           popupWithUpdateAvatar.handleStateButtonDone();
         })
         .catch((err) => {
           console.log(err);
-          popupWithUpdateAvatar.close();
         });
     },
   },
@@ -150,7 +152,6 @@ const popupWithCard = new PopupWithForm(
         })
         .catch((err) => {
           console.log(err);
-          popupWithCard.close();
         });
     },
   },
@@ -194,15 +195,3 @@ popupWithProfile.setEventListeners();
 popupImageClass.setEventListeners();
 popupWithConfirmation.setEventListeners();
 popupWithUpdateAvatar.setEventListeners();
-
-api
-  .getProfileData()
-  .then((result) => {
-    document.querySelector(".profile__avatar").src = result.avatar;
-    document.querySelector(constants.name).textContent = result.name;
-    document.querySelector(constants.subtitle).textContent = result.about;
-    ownerId = result._id;
-  })
-  .catch((err) => {
-    console.log(err);
-  });

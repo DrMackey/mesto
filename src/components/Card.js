@@ -55,7 +55,14 @@ export class Card {
     });
   }
 
-  _checkValueLikes() {}
+  getId() {
+    return this._idCard;
+  }
+
+  cardRemove() {
+    this._element.remove();
+    this._element = null;
+  }
 
   generateCard() {
     this._element = this._getTemplate();

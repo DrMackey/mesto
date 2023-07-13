@@ -21,3 +21,4 @@ export const popupImage = ".popup_type_image";
 export const popupConfirm = ".popup_type_delete";
 export const popupUpdateAvatar = ".popup_type_update-avatar";
 export const formValidatorItemList = {};
+export const cardItemList = {};
